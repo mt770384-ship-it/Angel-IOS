@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF Loader Hacker UI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#010302;
+font-family:'Share Tech Mono',monospace;
+color:#00ff88;
+}
+
+/* BACKGROUND */
+
+body{
+background:
+radial-gradient(circle at center,
+rgba(0,255,100,.08),
+transparent 70%),
+#010302;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(0,255,120,.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,120,.04) 1px, transparent 1px);
+background-size:32px 32px;
+opacity:.4;
+}
+
+/* MAIN DEVICE */
+
+.device{
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:12px;
+}
+
+.screen{
+width:430px;
+height:95vh;
+background:#020705;
+border:1px solid #0f5;
+border-radius:18px;
+overflow:hidden;
+box-shadow:
+0 0 40px rgba(0,255,100,.15),
+inset 0 0 25px rgba(0,255,100,.05);
+display:flex;
+flex-direction:column;
+}
+
+/* HEADER */
+
+.header{
+height:62px;
+border-bottom:1px solid rgba(0,255,120,.2);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+background:rgba(0,0,0,.25);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-family:'Orbitron',sans-serif;
+font-size:22px;
+font-weight:700;
+text-shadow:0 0 12px #00ff88;
+}
+
+.logoicon{
+width:18px;
+height:18px;
+background:#00ff88;
+clip-path:polygon(50% 0%,100% 100%,0% 100%);
+box-shadow:0 0 15px #00ff88;
+}
+
+.status{
+font-size:11px;
+color:#8dffc4;
+}
+
+/* TOP INFO */
+
+.topinfo{
+height:48px;
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:8px;
+padding:10px;
+border-bottom:1px solid rgba(0,255,120,.12);
+}
+
+.topbox{
+border:1px solid rgba(0,255,120,.12);
+background:#010403;
+border-radius:8px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:10px;
+}
+
+/* CONTENT */
+
+.content{
+flex:1;
+padding:10px;
+overflow:hidden;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:10px;
+}
+
+/* LEFT */
+
+.left{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+/* PANEL */
+
+.panel{
+border:1px solid rgba(0,255,120,.18);
+background:rgba(0,0,0,.22);
+border-radius:12px;
+padding:12px;
+box-shadow:
+0 0 20px rgba(0,255,120,.05),
+inset 0 0 20px rgba(0,255,120,.03);
+}
+
+.title{
+font-family:'Orbitron',sans-serif;
+font-size:15px;
+margin-bottom:6px;
+text-align:center;
+letter-spacing:1px;
+}
+
+.subtitle{
+text-align:center;
+font-size:10px;
+color:#82ffbe;
+margin-bottom:12px;
+}
+
+/* CIRCLE */
+
+.circlewrap{
+display:flex;
+justify-content:center;
+align-items:center;
+margin:8px 0 12px;
+}
+
+.circle{
+width:170px;
+height:170px;
+border-radius:50%;
+border:8px solid rgba(0,255,120,.1);
+border-top:8px solid #00ff88;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+font-weight:bold;
+font-family:'Orbitron',sans-serif;
+box-shadow:
+0 0 25px rgba(0,255,120,.25),
+inset 0 0 25px rgba(0,255,120,.12);
+animation:spin 5s linear infinite;
+position:relative;
+}
+
+.circle::before{
+content:'';
+position:absolute;
+width:120px;
+height:120px;
+border-radius:50%;
+border:1px solid rgba(0,255,120,.3);
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+/* MINI INFO */
+
+.infogrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+}
+
+.info{
+border:1px solid rgba(0,255,120,.15);
+border-radius:8px;
+padding:8px;
+font-size:10px;
+line-height:1.8;
+background:#010403;
+}
+
+/* CONSOLE */
+
+.console{
+margin-top:10px;
+height:170px;
+overflow:auto;
+background:#000;
+border:1px solid rgba(0,255,120,.15);
+border-radius:8px;
+padding:10px;
+font-size:10px;
+line-height:1.8;
+}
+
+.console::-webkit-scrollbar{
+width:3px;
+}
+
+.console::-webkit-scrollbar-thumb{
+background:#00ff88;
+}
+
+/* PROGRESS */
+
+.progresspanel{
+margin-top:10px;
+}
+
+.progress{
+height:14px;
+background:#111;
+border-radius:30px;
+overflow:hidden;
+border:1px solid rgba(0,255,120,.15);
+}
+
+.bar{
+width:0%;
+height:100%;
+background:linear-gradient(90deg,#00ff88,#00ffee);
+box-shadow:0 0 15px #00ff88;
+transition:.4s;
+}
+
+.percent{
+text-align:center;
+margin-top:8px;
+font-family:'Orbitron',sans-serif;
+font-size:26px;
+}
+
+/* BUTTON */
+
+.btn{
+width:100%;
+height:44px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:linear-gradient(90deg,#00ff88,#00d9ff);
+font-family:'Orbitron',sans-serif;
+font-size:12px;
+font-weight:bold;
+cursor:pointer;
+color:#00140d;
+box-shadow:0 0 15px rgba(0,255,120,.25);
+}
+
+/* RIGHT */
+
+.right{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.side{
+border:1px solid rgba(0,255,120,.15);
+border-radius:10px;
+padding:10px;
+background:#010403;
+}
+
+.side h3{
+font-size:11px;
+margin-bottom:12px;
+font-family:'Orbitron',sans-serif;
+}
+
+.stat{
+margin-bottom:10px;
+font-size:10px;
+}
+
+.statbar{
+height:6px;
+background:#111;
+border-radius:20px;
+overflow:hidden;
+margin-top:4px;
+}
+
+.fill{
+height:100%;
+background:#00ff88;
+box-shadow:0 0 10px #00ff88;
+}
+
+/* FOOTER */
+
+.footer{
+height:30px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 10px;
+font-size:9px;
+border-top:1px solid rgba(0,255,120,.12);
+color:#6dffb1;
+}
+
+/* MOBILE */
+
+@media(max-width:480px){
+
+.screen{
+width:100%;
+height:100vh;
+border-radius:0;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="device">
+
+<div class="screen">
+
+<div class="header">
+
+<div class="logo">
+<div class="logoicon"></div>
+FF LOADER
+</div>
+
+<div class="status" id="deviceName">
+CONNECTED
+</div>
+
+</div>
+
+<div class="topinfo">
+
+<div class="topbox" id="systemBox">
+IOS SYSTEM
+</div>
+
+<div class="topbox" id="langBox">
+LANG
+</div>
+
+<div class="topbox" id="netBox">
+ONLINE
+</div>
+
+</div>
+
+<div class="content">
+
+<!-- LEFT -->
+
+<div class="left">
+
+<div class="panel">
+
+<div class="title">
+SISTEMA DE INYECCIÓN
+</div>
+
+<div class="subtitle">
+FREE FIRE OPTIMIZATION MODULE
+</div>
+
+<div class="circlewrap">
+
+<div class="circle" id="circle">
+0%
+</div>
+
+</div>
+
+<div class="infogrid">
+
+<div class="info" id="deviceInfo">
+DEVICE: UNKNOWN<br>
+SYSTEM: UNKNOWN<br>
+LANGUAGE: UNKNOWN
+</div>
+
+<div class="info">
+SECURITY: ACTIVE<br>
+PROFILE: PERFORMANCE<br>
+STATUS: READY
+</div>
+
+</div>
+
+<div class="console" id="console">
+> Initializing FF Loader...
+</div>
+
+<div class="progresspanel">
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div class="percent" id="percent">
+0%
+</div>
+
+</div>
+
+<button class="btn" onclick="startSystem()" id="startBtn">
+INICIAR COMPLETADO
+</button>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="right">
+
+<div class="side">
+
+<h3>MONITOR DEL SISTEMA</h3>
+
+<div class="stat">
+CPU 78%
+<div class="statbar">
+<div class="fill" style="width:78%"></div>
+</div>
+</div>
+
+<div class="stat">
+RAM 63%
+<div class="statbar">
+<div class="fill" style="width:63%"></div>
+</div>
+</div>
+
+<div class="stat">
+BATERÍA <span id="batteryText">--%</span>
+<div class="statbar">
+<div class="fill" id="batteryBar" style="width:90%"></div>
+</div>
+</div>
+
+</div>
+
+<div class="side">
+
+<h3>CONEXIÓN</h3>
+
+<div style="font-size:10px;line-height:1.8;" id="networkType">
+STATUS: ONLINE
+</div>
+
+</div>
+
+<div class="side">
+
+<h3>MÓDULOS</h3>
+
+<div style="font-size:10px;line-height:1.9;">
+✔ AIM ASSIST<br>
+✔ NETWORK BOOST<br>
+✔ MEMORY ENGINE<br>
+✔ RESOURCE SYSTEM<br>
+✔ GRAPHICS BOOST
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+<div>FF CYBER SYSTEM</div>
+<div id="timeNow">00:00</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function updateClock(){
+
+const now = new Date();
+
+let h =
+String(now.getHours()).padStart(2,'0');
+
+let m =
+String(now.getMinutes()).padStart(2,'0');
+
+document.getElementById("timeNow")
+innerHTML =
+h + ":" + m;
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+/* DEVICE */
+
+function detect(){
+
+const ua = navigator.userAgent;
+
+let device = "Mobile";
+let os = "Unknown";
+
+if(/iPhone/i.test(ua)){
+device = "iPhone";
+os = "iOS";
+}
+
+if(/Android/i.test(ua)){
+device = "Android";
+os = "Android";
+}
+
+document.getElementById("deviceName")
+innerHTML =
+device + " ONLINE";
+
+document.getElementById("deviceInfo")
+innerHTML =
+"DEVICE: " + device + "<br>" +
+"SYSTEM: " + os + "<br>" +
+"LANGUAGE: " + navigator.language;
+
+document.getElementById("systemBox")
+innerHTML =
+os + " SYSTEM";
+
+document.getElementById("langBox")
+innerHTML =
+navigator.language.toUpperCase();
+
+}
+
+/* NETWORK */
+
+function network(){
+
+if(navigator.connection){
+
+let type =
+navigator.connection.effectiveType;
+
+document.getElementById("networkType")
+innerHTML =
+"NETWORK: " + type.toUpperCase() + "<br>" +
+"STATUS: SECURE<br>" +
+"PING: 23MS";
+
+document.getElementById("netBox")
+innerHTML =
+type.toUpperCase();
+
+}
+
+}
+
+/* BATTERY */
+
+async function battery(){
+
+if(navigator.getBattery){
+
+const b =
+await navigator.getBattery();
+
+let level =
+Math.round(b.level * 100);
+
+document.getElementById("batteryText")
+innerHTML =
+level + "%";
+
+document.getElementById("batteryBar")
+style.width =
+level + "%";
+
+}
+
+}
+
+detect();
+network();
+battery();
+
+/* SYSTEM */
+
+const consoleBox =
+document.getElementById("console");
+
+function log(text){
+
+consoleBox.innerHTML +=
+"<br>> " + text;
+
+consoleBox.scrollTop =
+consoleBox.scrollHeight;
+
+}
+
+let started = false;
+
+function startSystem(){
+
+if(started) return;
+
+started = true;
+
+document.getElementById("startBtn")
+disabled = true;
+
+const steps = [
+
+"Checking device integrity...",
+"Loading optimization modules...",
+"Initializing secure runtime...",
+"Verifying system environment...",
+"Stabilizing graphics engine...",
+"Cleaning temporary memory...",
+"Applying performance profile...",
+"Synchronizing secure resources...",
+"Finalizing injection process...",
+"Launching Free Fire..."
+
+];
+
+let progress = 0;
+
+let i = 0;
+
+let interval = setInterval(()=>{
+
+if(i < steps.length){
+
+log(steps[i]);
+
+progress += 10;
+
+document.getElementById("bar")
+style.width =
+progress + "%";
+
+document.getElementById("percent")
+innerHTML =
+progress + "%";
+
+document.getElementById("circle")
+innerHTML =
+progress + "%";
+
+i++;
+
+}else{
+
+clearInterval(interval);
+
+log("SYSTEM COMPLETED SUCCESSFULLY");
+
+setTimeout(()=>{
+
+window.location.href =
+"shortcuts://run-shortcut?name=FFLoader";
+
+},3000);
+
+}
+
+},1400);
+
+}
+
+</script>
+
+</body>
+</html>
