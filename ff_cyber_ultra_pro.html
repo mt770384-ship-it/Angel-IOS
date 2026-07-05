@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FF Cyber Loader</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+background:#02040a;
+font-family:'Orbitron',sans-serif;
+color:#00ff9d;
+}
+
+/* BACKGROUND */
+
+body{
+background:
+radial-gradient(circle at top,#0d1626 0%,#02040a 45%,#010203 100%);
+}
+
+.grid{
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(rgba(0,255,150,.05) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,255,150,.05) 1px, transparent 1px);
+background-size:40px 40px;
+opacity:.4;
+animation:gridMove 10s linear infinite;
+}
+
+@keyframes gridMove{
+0%{transform:translateY(0);}
+100%{transform:translateY(40px);}
+}
+
+/* MAIN */
+
+.app{
+position:relative;
+z-index:2;
+height:100vh;
+display:flex;
+flex-direction:column;
+padding:14px;
+gap:14px;
+}
+
+/* HEADER */
+
+.header{
+height:64px;
+border:1px solid rgba(0,255,157,.25);
+background:rgba(4,10,20,.85);
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 18px;
+backdrop-filter:blur(14px);
+box-shadow:
+0 0 30px rgba(0,255,157,.08),
+inset 0 0 20px rgba(0,255,157,.04);
+}
+
+.logo{
+font-size:22px;
+font-weight:700;
+letter-spacing:2px;
+text-shadow:0 0 18px #00ff9d;
+}
+
+.online{
+font-size:12px;
+color:#84ffd0;
+}
+
+/* CONTENT */
+
+.content{
+flex:1;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:14px;
+overflow:hidden;
+}
+
+/* PANELS */
+
+.panel{
+background:rgba(4,10,20,.88);
+border:1px solid rgba(0,255,157,.25);
+border-radius:22px;
+backdrop-filter:blur(14px);
+box-shadow:
+0 0 30px rgba(0,255,157,.08),
+inset 0 0 20px rgba(0,255,157,.03);
+overflow:hidden;
+position:relative;
+}
+
+.panel::before{
+content:'';
+position:absolute;
+top:0;
+left:-100%;
+width:100%;
+height:2px;
+background:linear-gradient(90deg,
+transparent,#00ff9d,transparent);
+animation:scan 3s linear infinite;
+}
+
+@keyframes scan{
+100%{left:100%;}
+}
+
+.top{
+height:44px;
+display:flex;
+align-items:center;
+padding:0 14px;
+border-bottom:1px solid rgba(0,255,157,.15);
+background:rgba(0,0,0,.15);
+font-size:13px;
+}
+
+.dots{
+display:flex;
+gap:6px;
+margin-right:10px;
+}
+
+.dot{
+width:10px;
+height:10px;
+border-radius:50%;
+}
+
+.red{background:#ff4d4d;}
+.yellow{background:#ffcc00;}
+.green{background:#00ff9d;}
+
+/* BODY */
+
+.body{
+padding:18px;
+height:calc(100% - 44px);
+overflow:hidden;
+display:flex;
+flex-direction:column;
+}
+
+/* CENTER */
+
+.center{
+display:flex;
+justify-content:center;
+align-items:center;
+margin-top:5px;
+}
+
+.circle{
+width:230px;
+height:230px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:38px;
+font-weight:700;
+color:#fff;
+background:
+radial-gradient(circle,
+rgba(0,255,157,.15),
+rgba(0,255,157,.02));
+border:8px solid rgba(0,255,157,.12);
+border-top:8px solid #00ff9d;
+box-shadow:
+0 0 40px rgba(0,255,157,.25),
+inset 0 0 35px rgba(0,255,157,.12);
+animation:spin 5s linear infinite;
+}
+
+@keyframes spin{
+100%{transform:rotate(360deg);}
+}
+
+/* INFO GRID */
+
+.info{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+margin-top:18px;
+}
+
+.card{
+padding:14px;
+border-radius:16px;
+background:rgba(0,0,0,.22);
+border:1px solid rgba(0,255,157,.15);
+font-size:12px;
+line-height:1.8;
+font-family:'Share Tech Mono',monospace;
+}
+
+/* CONSOLE */
+
+.console{
+margin-top:16px;
+flex:1;
+background:#000;
+border-radius:16px;
+border:1px solid rgba(0,255,157,.2);
+padding:14px;
+overflow:auto;
+font-size:12px;
+line-height:1.8;
+font-family:'Share Tech Mono',monospace;
+box-shadow:inset 0 0 25px rgba(0,255,157,.06);
+}
+
+.console::-webkit-scrollbar{
+width:4px;
+}
+
+.console::-webkit-scrollbar-thumb{
+background:#00ff9d;
+}
+
+/* PROGRESS */
+
+.progress{
+margin-top:14px;
+height:16px;
+border-radius:30px;
+overflow:hidden;
+background:#111;
+border:1px solid rgba(0,255,157,.25);
+}
+
+.bar{
+width:0%;
+height:100%;
+background:linear-gradient(90deg,#00ff9d,#00d9ff);
+box-shadow:0 0 20px #00ff9d;
+transition:.4s;
+}
+
+.percent{
+text-align:center;
+margin-top:10px;
+font-size:22px;
+}
+
+/* BUTTON */
+
+.btn{
+margin-top:18px;
+height:54px;
+border:none;
+border-radius:16px;
+background:linear-gradient(90deg,#00ff9d,#00d9ff);
+color:#021018;
+font-weight:700;
+font-size:15px;
+cursor:pointer;
+box-shadow:0 0 25px rgba(0,255,157,.22);
+transition:.3s;
+}
+
+.btn:hover{
+transform:scale(1.02);
+}
+
+/* SIDE */
+
+.side{
+display:flex;
+flex-direction:column;
+gap:14px;
+}
+
+.sidebox{
+padding:16px;
+border-radius:20px;
+background:rgba(4,10,20,.88);
+border:1px solid rgba(0,255,157,.22);
+backdrop-filter:blur(14px);
+box-shadow:
+0 0 25px rgba(0,255,157,.06),
+inset 0 0 20px rgba(0,255,157,.03);
+}
+
+.sidebox h3{
+margin-bottom:16px;
+font-size:15px;
+}
+
+.stat{
+margin-bottom:14px;
+font-size:12px;
+}
+
+.statbar{
+height:8px;
+margin-top:5px;
+background:#111;
+border-radius:20px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+background:#00ff9d;
+box-shadow:0 0 10px #00ff9d;
+}
+
+/* FOOTER */
+
+.footer{
+height:42px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:11px;
+color:#7affcf;
+background:rgba(4,10,20,.85);
+border:1px solid rgba(0,255,157,.18);
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+html,body{
+overflow:auto;
+}
+
+.content{
+grid-template-columns:1fr;
+overflow:auto;
+}
+
+.circle{
+width:170px;
+height:170px;
+font-size:28px;
+}
+
+.console{
+min-height:170px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<div class="app">
+
+<div class="header">
+
+<div class="logo">
+FF CYBER OS
+</div>
+
+<div class="online" id="deviceName">
+DETECTING DEVICE...
+</div>
+
+</div>
+
+<div class="content">
+
+<!-- LEFT -->
+
+<div class="panel">
+
+<div class="top">
+
+<div class="dots">
+<div class="dot red"></div>
+<div class="dot yellow"></div>
+<div class="dot green"></div>
+</div>
+
+Advanced Optimization Console
+
+</div>
+
+<div class="body">
+
+<div class="center">
+
+<div class="circle" id="circle">
+0%
+</div>
+
+</div>
+
+<div class="info">
+
+<div class="card" id="deviceInfo">
+DEVICE: UNKNOWN<br>
+SYSTEM: UNKNOWN<br>
+LANGUAGE: UNKNOWN<br>
+STATUS: READY
+</div>
+
+<div class="card" id="networkInfo">
+NETWORK: ONLINE<br>
+ENGINE: ACTIVE<br>
+SECURITY: AES-256<br>
+PROFILE: PERFORMANCE
+</div>
+
+</div>
+
+<div class="console" id="console">
+> Initializing cyber runtime...
+</div>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div class="percent" id="percent">
+0%
+</div>
+
+<button class="btn" onclick="startSystem()" id="startBtn">
+INITIALIZE SYSTEM
+</button>
+
+</div>
+
+</div>
+
+<!-- RIGHT -->
+
+<div class="side">
+
+<div class="sidebox">
+
+<h3>SYSTEM STATUS</h3>
+
+<div class="stat">
+CPU 78%
+<div class="statbar">
+<div class="fill" style="width:78%"></div>
+</div>
+</div>
+
+<div class="stat">
+RAM 64%
+<div class="statbar">
+<div class="fill" style="width:64%"></div>
+</div>
+</div>
+
+<div class="stat">
+BATTERY <span id="batteryText">--%</span>
+<div class="statbar">
+<div class="fill" id="batteryBar" style="width:80%"></div>
+</div>
+</div>
+
+</div>
+
+<div class="sidebox">
+
+<h3>ACTIVE MODULES</h3>
+
+✔ Runtime Engine<br><br>
+✔ Graphics Stabilizer<br><br>
+✔ Dynamic Optimizer<br><br>
+✔ Secure Loader<br><br>
+✔ Resource Manager
+
+</div>
+
+<div class="sidebox">
+
+<h3>NETWORK</h3>
+
+<div id="networkType">
+STATUS: ONLINE
+</div>
+
+<br>
+
+PING: 23ms
+
+<br><br>
+
+SECURITY: AES-256
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+FF CYBER SYSTEM © 2026
+</div>
+
+</div>
+
+<script>
+
+const consoleBox =
+document.getElementById("console");
+
+function log(text){
+
+consoleBox.innerHTML +=
+"<br>> " + text;
+
+consoleBox.scrollTop =
+consoleBox.scrollHeight;
+
+}
+
+/* DEVICE INFO */
+
+function detectDevice(){
+
+const ua = navigator.userAgent;
+
+let device = "Mobile Device";
+let os = "Unknown";
+
+if(/iPhone/i.test(ua)){
+device = "iPhone";
+os = "iOS";
+}
+
+if(/Android/i.test(ua)){
+device = "Android";
+os = "Android";
+}
+
+document.getElementById("deviceName")
+innerHTML =
+device + " CONNECTED";
+
+document.getElementById("deviceInfo")
+innerHTML =
+"DEVICE: " + device + "<br>" +
+"SYSTEM: " + os + "<br>" +
+"LANGUAGE: " + navigator.language + "<br>" +
+"STATUS: READY";
+
+}
+
+/* NETWORK */
+
+function detectNetwork(){
+
+if(navigator.connection){
+
+let type =
+navigator.connection.effectiveType;
+
+document.getElementById("networkType")
+innerHTML =
+"NETWORK: " + type.toUpperCase();
+
+}
+
+}
+
+/* BATTERY */
+
+async function battery(){
+
+if(navigator.getBattery){
+
+const battery =
+await navigator.getBattery();
+
+let level =
+Math.round(battery.level * 100);
+
+document.getElementById("batteryText")
+innerHTML =
+level + "%";
+
+document.getElementById("batteryBar")
+style.width =
+level + "%";
+
+}
+
+}
+
+/* SYSTEM */
+
+let started = false;
+
+function startSystem(){
+
+if(started) return;
+
+started = true;
+
+document.getElementById("startBtn")
+disabled = true;
+
+const steps = [
+
+"Checking device integrity...",
+"Loading runtime modules...",
+"Initializing optimization engine...",
+"Verifying secure environment...",
+"Stabilizing graphics system...",
+"Cleaning temporary memory...",
+"Applying performance profile...",
+"Synchronizing cyber resources...",
+"Finalizing process...",
+"Launching Free Fire..."
+
+];
+
+let progress = 0;
+
+let i = 0;
+
+let interval = setInterval(()=>{
+
+if(i < steps.length){
+
+log(steps[i]);
+
+progress += 10;
+
+document.getElementById("bar")
+style.width =
+progress + "%";
+
+document.getElementById("percent")
+innerHTML =
+progress + "%";
+
+document.getElementById("circle")
+innerHTML =
+progress + "%";
+
+i++;
+
+}else{
+
+clearInterval(interval);
+
+log("SYSTEM COMPLETED SUCCESSFULLY");
+
+setTimeout(()=>{
+
+window.location.href =
+"shortcuts://run-shortcut?name=FFLoader";
+
+},3000);
+
+}
+
+},1400);
+
+}
+
+detectDevice();
+detectNetwork();
+battery();
+
+</script>
+
+</body>
+</html>
